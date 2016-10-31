@@ -2,6 +2,9 @@ require 'sinatra'
 require 'appsignal/integrations/sinatra'
 require 'sinatra/reloader' if development?
 require 'sinatra/json'
+require 'discourse_api'
+require 'dotenv'
+Dotenv.load
 
 get '/' do
   redirect 'https://birmingham.io/', 301
@@ -35,11 +38,21 @@ def forum_search
 end
 
 def forum_latest
-  format_return 'Latest topics'
+  format_return discourse_client.latest_topics
 end
 
 def forum_top
   format_return 'Top topics'
+end
+
+def discourse_client
+  @discourse_client ||= begin
+    DiscourseApi::Client.new(
+        ENV['DISCOURSE_URL'],
+        ENV['DISCOURSE_API_KEY'],
+        ENV['DISCOURSE_API_USERNAME']
+    )
+  end
 end
 
 # returning data stuff
