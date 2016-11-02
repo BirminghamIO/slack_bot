@@ -9,7 +9,7 @@ class Application < Sinatra::Base
   end
 
   get '/' do
-    'Hello, world'
+    redirect 'https://birmingham.io/', 301
   end
 
   post '/' do

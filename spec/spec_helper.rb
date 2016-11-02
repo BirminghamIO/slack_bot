@@ -1,6 +1,17 @@
-ENV['RACK_ENV'] = 'test'
 require_relative '../app/application'
+require 'rack/test'
 require 'rspec'
-require 'capybara/rspec'
 
-Capybara.app = Application
+ENV['RACK_ENV'] = 'test'
+
+module RSpecMixin
+  include Rack::Test::Methods
+
+  def app
+    described_class
+  end
+end
+
+RSpec.configure do |c|
+  c.include RSpecMixin
+end
