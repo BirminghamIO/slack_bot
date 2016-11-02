@@ -1,7 +1,6 @@
 require_relative '../spec_helper.rb'
 
 RSpec.describe Application do
-
   context 'GET /' do
     subject { get '/' }
 
