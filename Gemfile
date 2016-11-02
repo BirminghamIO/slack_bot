@@ -7,3 +7,8 @@ gem 'thin', '~> 1.7.0'
 gem 'appsignal', '~> 2.0.0'
 gem 'discourse_api', '~> 0.14.0'
 gem 'dotenv', '~> 2.1.1'
+
+group :test do
+  gem 'rspec', '~> 3.5.0'
+  gem 'capybara', '~> 2.10.1'
+end
