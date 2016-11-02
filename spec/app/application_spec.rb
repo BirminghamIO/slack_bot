@@ -2,9 +2,13 @@ require_relative '../spec_helper.rb'
 
 RSpec.describe Application do
 
-  it 'should redirect to birmingham.io' do
-    get '/'
+  context 'GET /' do
+    subject { get '/' }
 
-    expect(last_response).to be_redirect
+    it 'redirects to birmingham.io' do
+      subject
+
+      expect(last_response).to be_redirect
+    end
   end
 end
