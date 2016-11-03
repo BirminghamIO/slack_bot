@@ -1,9 +1,16 @@
 require 'rubygems'
 require 'bundler'
 
+require_relative '../lib/discourse'
+
 Bundler.require
 
 class Application < Sinatra::Base
+  def initialize
+    super
+    @discourse = Discourse.new
+  end
+
   configure :development do
     register Sinatra::Reloader
   end
@@ -40,29 +47,23 @@ class Application < Sinatra::Base
   end
 
   def forum_latest
-    format_return discourse_client.latest_topics
+    format_return discourse.latest_topics
   end
 
   def forum_top
     format_return 'Top topics'
   end
 
-  def discourse_client
-    @discourse_client ||= begin
-      DiscourseApi::Client.new(
-          ENV['DISCOURSE_URL'],
-          ENV['DISCOURSE_API_KEY'],
-          ENV['DISCOURSE_API_USERNAME']
-      )
-    end
-  end
-
   # returning data stuff
   def format_return(string)
     {
-        'speech':      string,
-        'displayText': string,
-        'source':      "birmingham.io"
+      'speech':      string,
+      'displayText': string,
+      'source':      "birmingham.io"
     }
   end
+
+  private
+
+  attr_reader :discourse
 end
