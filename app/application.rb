@@ -6,11 +6,6 @@ require_relative '../lib/discourse'
 Bundler.require
 
 class Application < Sinatra::Base
-  def initialize
-    super
-    @discourse = Discourse.new
-  end
-
   configure :development do
     register Sinatra::Reloader
   end
@@ -62,8 +57,4 @@ class Application < Sinatra::Base
       'source':      "birmingham.io"
     }
   end
-
-  private
-
-  attr_reader :discourse
 end
